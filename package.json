@@ -1,0 +1,38 @@
+{
+  "name": "nuxt-auth",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push",
+    "db:migrate": "prisma migrate dev",
+    "db:seed": "prisma db seed"
+  },
+  "dependencies": {
+    "@better-auth/prisma-adapter": "^1.7.7",
+    "@prisma/adapter-pg": "^7.10.0",
+    "@prisma/client": "^7.10.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "better-auth": "^1.7.7",
+    "clsx": "^2.1.1",
+    "nodemailer": "^10.0.16",
+    "nuxt": "^4.6.0",
+    "pg": "^8.23.1",
+    "tailwind-merge": "^3.7.0",
+    "tailwindcss": "^4.3.3",
+    "vue": "^3.5.43",
+    "vue-router": "^5.3.1",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.23.1",
+    "dotenv": "^18.0.7",
+    "prisma": "^7.10.0",
+    "tsx": "^4.23.15"
+  }
+}

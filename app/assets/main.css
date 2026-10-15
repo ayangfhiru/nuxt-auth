@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+/*
+ * Design token brand AuthOra.
+ * Karena didefinisikan di sini, semua warna utama bisa dipakai di mana saja
+ * sebagai class Tailwind: bg-primary-600, text-primary-400, ring-primary-500/15, dll.
+ */
+@theme {
+  --color-primary-50: #f3f1ff;
+  --color-primary-100: #e9e5ff;
+  --color-primary-200: #d8d0ff;
+  --color-primary-400: #8f77ff;
+  --color-primary-500: #6d4df7;
+  --color-primary-600: #5b3ef0;
+  --color-primary-700: #4a2ed6;
+}
+
+/*
+ * Variant tambahan: `short`
+ * ---------------------------------------------------------------------------
+ * `short` = tinggi layar <= 900px (laptop yang viewport-nya menyempit karena
+ * tab + toolbar browser, mis. layar 1440x900 / 1366x768).
+ *
+ * Dipakkan bersama breakpoint `lg:` supaya hanya memadatkan layout 2 kolom,
+ * sehingga tampilan di smartphone TIDAK berubah sama sekali.
+ *
+ * Contoh pemakaian di component:
+ *   class="py-4 short:py-2"             -> panel promo (hanya tampil di lg)
+ *   class="lg:py-10 lg:short:py-6"      -> panel form (khusus lg ke atas)
+ */
+@custom-variant short (@media (max-height: 900px));
