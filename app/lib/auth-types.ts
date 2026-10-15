@@ -12,4 +12,6 @@ export interface AuthFormValues {
   name: string;
   email: string;
   password: string;
+  /** hanya diisi pada mode register (untuk konfirmasi password) */
+  confirmPassword?: string;
 }

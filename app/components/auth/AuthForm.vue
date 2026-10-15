@@ -4,13 +4,20 @@
  *
  * Tugasnya:
  *  1. menyusun field-field (AuthTextField / AuthPasswordField / AuthTermsCheckbox)
- *  2. memvalidasi input sebelum dikirim
+ *  2. memvalidasi input sebelum dikirim (helper di app/utils/validation.ts)
  *  3. mem-broadcast hasilnya ke halaman lewat event `submit`
  *
- * Halaman (pages/index.vue) yang memutuskan mau memanggil API apa,
- * jadi komponen ini tidak tahu-menahu soal backend.
+ * Halaman (pages/register.vue & pages/login.vue) yang memutuskan mau memanggil
+ * API apa, jadi komponen ini tidak tahu-menahu soal backend.
  */
 import type { AuthFormValues, AuthMode } from "~/lib/auth-types";
+import {
+  isValidEmail,
+  normalizeEmail,
+  passwordConfirmationError,
+  passwordError,
+  passwordPolicy,
+} from "~/utils/validation";
 
 interface Props {
   mode: AuthMode;
@@ -26,12 +33,14 @@ const emit = defineEmits<{
 }>();
 
 const isRegister = computed(() => props.mode === "register");
+const policy = passwordPolicy();
 
 /** nilai semua input */
-const form = reactive<AuthFormValues>({
+const form = reactive({
   name: "",
   email: "",
   password: "",
+  confirmPassword: "",
 });
 
 /** status checkbox persetujuan (khusus register) */
@@ -42,6 +51,7 @@ const errors = reactive({
   name: "",
   email: "",
   password: "",
+  confirmPassword: "",
   agreed: "",
 });
 
@@ -49,28 +59,45 @@ function clearErrors() {
   errors.name = "";
   errors.email = "";
   errors.password = "";
+  errors.confirmPassword = "";
   errors.agreed = "";
 }
 
 function validate(): boolean {
   clearErrors();
 
+  // 1. nama (khusus register)
   if (isRegister.value && form.name.trim().length < 2) {
     errors.name = "Please enter your full name.";
   }
 
-  if (!form.email.trim()) {
+  // 2. email
+  const email = normalizeEmail(form.email);
+  if (!email) {
     errors.email = "Please enter your e-mail address.";
-  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) {
+  } else if (!isValidEmail(email)) {
     errors.email = "Please enter a valid e-mail address.";
   }
 
-  if (!form.password) {
-    errors.password = "Please enter your password.";
-  } else if (isRegister.value && form.password.length < 8) {
-    errors.password = "Use at least 8 characters for your password.";
+  // 3. password (register ikut kebijakan panjang; login cukup terisi)
+  const passwordMessage = isRegister.value
+    ? passwordError(form.password)
+    : form.password
+      ? null
+      : "Please enter your password.";
+
+  if (passwordMessage) errors.password = passwordMessage;
+
+  // 4. konfirmasi password (khusus register)
+  if (isRegister.value) {
+    const confirmMessage = passwordConfirmationError(
+      form.password,
+      form.confirmPassword,
+    );
+    if (confirmMessage) errors.confirmPassword = confirmMessage;
   }
 
+  // 5. persetujuan ToS (khusus register)
   if (isRegister.value && !agreed.value) {
     errors.agreed = "You must agree to the Terms of Service and Privacy Policy.";
   }
@@ -79,12 +106,14 @@ function validate(): boolean {
 }
 
 function handleSubmit() {
+  if (props.loading) return; // cegah submit ganda
   if (!validate()) return;
 
   emit("submit", {
     name: form.name.trim(),
-    email: form.email.trim(),
+    email: normalizeEmail(form.email),
     password: form.password,
+    confirmPassword: form.confirmPassword,
   });
 }
 
@@ -93,6 +122,7 @@ watch(
   () => props.mode,
   () => {
     form.password = "";
+    form.confirmPassword = "";
     agreed.value = false;
     clearErrors();
   },
@@ -101,7 +131,7 @@ watch(
 
 <template>
   <form
-    class="space-y-5 lg:space-y-4 lg:short:space-y-2.5"
+    class="space-y-5 lg:space-y-4 lg:short:space-y-2"
     novalidate
     @submit.prevent="handleSubmit"
   >
@@ -137,20 +167,44 @@ watch(
       v-model="form.password"
       :autocomplete="isRegister ? 'new-password' : 'current-password'"
       :hint="
-        isRegister ? 'Use at least 8 characters for your password.' : ''
+        isRegister
+          ? `Use at least ${policy.minLength} characters for your password.`
+          : ''
       "
       :required="true"
       :error="errors.password"
     />
 
-    <!-- 4. Persetujuan ToS (hanya register) -->
+    <!-- 3b. Lupa password? (hanya login) -->
+    <div v-if="!isRegister" class="-mt-2 flex justify-end lg:-mt-1">
+      <NuxtLink
+        to="/forgot-password"
+        class="text-xs font-semibold text-primary-600 underline-offset-4 transition hover:underline"
+      >
+        Forgot password?
+      </NuxtLink>
+    </div>
+
+    <!-- 4. Konfirmasi password (hanya register) -->
+    <AuthPasswordField
+      v-if="isRegister"
+      v-model="form.confirmPassword"
+      id="confirm-password"
+      label="Confirm password"
+      placeholder="Re-enter your password"
+      autocomplete="new-password"
+      :required="true"
+      :error="errors.confirmPassword"
+    />
+
+    <!-- 5. Persetujuan ToS (hanya register) -->
     <AuthTermsCheckbox
       v-if="isRegister"
       v-model="agreed"
       :error="errors.agreed"
     />
 
-    <!-- 5. Tombol submit -->
+    <!-- 6. Tombol submit -->
     <AuthSubmitButton
       :loading="loading"
       :label="isRegister ? 'Create account' : 'Sign in'"

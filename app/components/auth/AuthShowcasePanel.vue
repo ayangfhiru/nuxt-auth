@@ -15,9 +15,9 @@
 </script>
 
 <template>
-  <div class="hidden p-5 lg:block">
+  <div class="hidden p-5 short:p-4 lg:block">
     <div
-      class="relative flex h-full min-h-[560px] flex-col overflow-hidden rounded-[24px] bg-[#0b0917] p-8 text-white"
+      class="relative flex h-full min-h-[560px] flex-col overflow-hidden rounded-[24px] bg-[#0b0917] p-8 short:p-5 text-white"
     >
       <!-- ===== Dekorasi latar ===== -->
       <div
@@ -49,13 +49,13 @@
           made <span class="text-primary-400">simple</span>.
         </h2>
 
-        <p class="mt-4 max-w-md text-sm leading-6 text-neutral-400">
+        <p class="mt-4 short:mt-3 max-w-md text-sm leading-6 text-neutral-400">
           Register, login, and verify with ease. Secure by design, built for
           developers.
         </p>
 
         <!-- Daftar fitur -->
-        <div class="mt-5">
+        <div class="mt-5 short:mt-4">
           <AuthShowcaseFeature
             icon="lock"
             title="Email OTP Verification"

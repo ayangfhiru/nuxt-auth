@@ -6,6 +6,7 @@
  * slot `trailing`, lalu tombolnya di-position absolute di kanan.
  */
 type InputType = "text" | "email" | "password";
+type InputMode = "text" | "numeric" | "decimal" | "search" | "email" | "tel" | "url";
 
 interface Props {
   id: string;
@@ -18,6 +19,9 @@ interface Props {
   autocomplete?: string;
   required?: boolean;
   minlength?: number;
+  maxlength?: number;
+  /** kontrol keyboard di mobile, mis. "numeric" untuk kode OTP */
+  inputmode?: InputMode;
 }
 
 withDefaults(defineProps<Props>(), {
@@ -29,6 +33,8 @@ withDefaults(defineProps<Props>(), {
   autocomplete: "off",
   required: false,
   minlength: undefined,
+  maxlength: undefined,
+  inputmode: undefined,
 });
 
 const model = defineModel<string>({ default: "" });
@@ -38,7 +44,7 @@ const model = defineModel<string>({ default: "" });
   <div>
     <label
       :for="id"
-      class="mb-2 block text-sm font-semibold text-neutral-900"
+      class="mb-2 block text-sm font-semibold text-neutral-900 lg:short:mb-1.5"
     >
       {{ label }}
     </label>
@@ -53,8 +59,10 @@ const model = defineModel<string>({ default: "" });
         :autocomplete="autocomplete"
         :required="required"
         :minlength="minlength"
+        :maxlength="maxlength"
+        :inputmode="inputmode"
         :aria-invalid="Boolean(error)"
-        class="w-full rounded-xl border bg-white px-4 py-3 text-sm text-neutral-900 outline-none transition placeholder:text-neutral-400"
+        class="w-full rounded-xl border bg-white px-4 py-3 text-sm text-neutral-900 outline-none transition placeholder:text-neutral-400 lg:short:py-2.5"
         :class="
           error
             ? 'border-red-400 hover:border-red-500 focus:border-red-500 focus:ring-4 focus:ring-red-500/12'

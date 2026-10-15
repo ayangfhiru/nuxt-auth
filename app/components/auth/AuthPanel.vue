@@ -7,7 +7,7 @@
 
 <template>
   <div
-    class="flex flex-col justify-center px-6 py-10 sm:px-10 sm:py-12 lg:px-14 lg:py-10 lg:short:py-6"
+    class="flex flex-col justify-center px-6 py-10 sm:px-10 sm:py-12 lg:px-14 lg:py-10 lg:short:py-3"
   >
     <slot />
   </div>
