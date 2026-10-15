@@ -17,7 +17,7 @@
 <template>
   <div class="hidden p-5 short:p-4 lg:block">
     <div
-      class="relative flex h-full min-h-[560px] flex-col overflow-hidden rounded-[24px] bg-[#0b0917] p-8 short:p-5 text-white"
+      class="relative flex h-full min-h-140 flex-col overflow-hidden rounded-3xl bg-[#0b0917] p-8 short:p-5 text-white"
     >
       <!-- ===== Dekorasi latar ===== -->
       <div
@@ -31,8 +31,20 @@
         stroke="currentColor"
         stroke-width="0.75"
       >
-        <ellipse cx="100" cy="100" rx="96" ry="52" transform="rotate(-32 100 100)" />
-        <ellipse cx="100" cy="100" rx="74" ry="98" transform="rotate(-32 100 100)" />
+        <ellipse
+          cx="100"
+          cy="100"
+          rx="96"
+          ry="52"
+          transform="rotate(-32 100 100)"
+        />
+        <ellipse
+          cx="100"
+          cy="100"
+          rx="74"
+          ry="98"
+          transform="rotate(-32 100 100)"
+        />
       </svg>
 
       <!-- ===== Brand ===== -->
@@ -56,26 +68,17 @@
 
         <!-- Daftar fitur -->
         <div class="mt-5 short:mt-4">
-          <AuthShowcaseFeature
-            icon="lock"
-            title="Email OTP Verification"
-          >
+          <AuthShowcaseFeature icon="lock" title="Email OTP Verification">
             Secure one-time password (OTP) sent to your email for verification
             and sign-in.
           </AuthShowcaseFeature>
 
-          <AuthShowcaseFeature
-            icon="database"
-            title="PostgreSQL with Prisma"
-          >
+          <AuthShowcaseFeature icon="database" title="PostgreSQL with Prisma">
             Reliable PostgreSQL database with Prisma ORM for type-safe queries
             and migrations.
           </AuthShowcaseFeature>
 
-          <AuthShowcaseFeature
-            icon="shield"
-            title="Better Auth"
-          >
+          <AuthShowcaseFeature icon="shield" title="Better Auth">
             Modern authentication library with
             <span class="font-medium text-primary-400">
               built-in support for email OTP
@@ -83,10 +86,7 @@
             , sessions, and more.
           </AuthShowcaseFeature>
 
-          <AuthShowcaseFeature
-            icon="code"
-            title="Built with Modern Stack"
-          >
+          <AuthShowcaseFeature icon="code" title="Built with Modern Stack">
             <template #extra>
               <AuthShowcaseTechStack />
             </template>
