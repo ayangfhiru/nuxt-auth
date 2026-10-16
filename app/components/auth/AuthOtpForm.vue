@@ -16,7 +16,11 @@
  *   <OtpForm ref="otpForm" @verify="..." @resend="..." />
  *   otpForm.value?.startCountdown(detik)   // sinkronkan dari respons server
  */
-import { isValidOtpFormat, normalizeOtp, otpSettings } from "~/utils/validation";
+import {
+  isValidOtpFormat,
+  normalizeOtp,
+  otpSettings,
+} from "~/utils/validation";
 
 interface Props {
   /** email tujuan kode (ditampilkan sebagai hint) */

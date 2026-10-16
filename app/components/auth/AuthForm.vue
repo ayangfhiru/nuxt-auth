@@ -99,7 +99,8 @@ function validate(): boolean {
 
   // 5. persetujuan ToS (khusus register)
   if (isRegister.value && !agreed.value) {
-    errors.agreed = "You must agree to the Terms of Service and Privacy Policy.";
+    errors.agreed =
+      "You must agree to the Terms of Service and Privacy Policy.";
   }
 
   return !Object.values(errors).some(Boolean);

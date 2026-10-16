@@ -9,6 +9,7 @@
  *  4. Server memvalidasi kode, mengganti password, MENCABUT sesi lama,
  *     lalu redirect ke /login dengan pesan sukses.
  */
+import type AuthOtpForm from "~/components/auth/AuthOtpForm.vue";
 import { normalizeEmail, passwordPolicy } from "~/utils/validation";
 
 definePageMeta({ middleware: "guest" });
@@ -16,12 +17,7 @@ definePageMeta({ middleware: "guest" });
 useHead({ title: "Reset your password — AuthOra" });
 
 const route = useRoute();
-const {
-  resetPassword,
-  sendOtp,
-  loading,
-  actionError,
-} = useAuth();
+const { resetPassword, sendOtp, loading, actionError } = useAuth();
 
 const policy = passwordPolicy();
 const otpForm = ref<InstanceType<typeof AuthOtpForm> | null>(null);

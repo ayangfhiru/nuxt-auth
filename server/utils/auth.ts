@@ -82,8 +82,8 @@ export const auth = betterAuth({
 
   socialProviders: {
     google: {
-      clientId: "",
-      clientSecret: "",
+      clientId: authConfig.google.clientId,
+      clientSecret: authConfig.google.clientSecret,
     },
   },
 });

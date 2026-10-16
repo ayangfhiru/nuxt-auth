@@ -13,6 +13,7 @@
  * Cooldown dikirim ulang DIPAKSA OLEH SERVER (/api/auth/otp/send),
  * bukan sekadar hitung mundur di browser.
  */
+import type AuthOtpForm from "~/components/auth/AuthOtpForm.vue";
 import { normalizeEmail, otpSettings } from "~/utils/validation";
 
 definePageMeta({ middleware: "guest" });

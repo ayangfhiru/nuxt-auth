@@ -17,13 +17,14 @@ withDefaults(defineProps<Props>(), {
 </script>
 
 <template>
-  <a href="/" class="flex w-fit items-center gap-2.5" aria-label="AuthOra — Home">
+  <a
+    href="/"
+    class="flex w-fit items-center gap-2.5"
+    aria-label="AuthOra — Home"
+  >
     <!-- Ikon perisai (keyhole dibuat "bolong" pakai fill-rule evenodd
          supaya warnanya ikut menyesuaikan background) -->
-    <span
-      v-if="variant === 'light'"
-      class="text-primary-600"
-    >
+    <span v-if="variant === 'light'" class="text-primary-600">
       <svg viewBox="0 0 24 24" class="h-9 w-9" fill="currentColor">
         <path
           fill-rule="evenodd"
@@ -47,6 +48,9 @@ withDefaults(defineProps<Props>(), {
     <span
       class="font-bold tracking-tight"
       :class="size === 'lg' ? 'text-2xl' : 'text-xl'"
-    ><span :class="variant === 'dark' ? 'text-white' : 'text-neutral-900'">Auth</span><span class="text-primary-500">Ora</span></span>
+      ><span :class="variant === 'dark' ? 'text-white' : 'text-neutral-900'"
+        >Auth</span
+      ><span class="text-primary-500">Ora</span></span
+    >
   </a>
 </template>

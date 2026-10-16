@@ -58,9 +58,11 @@ function escapeHtml(value: string): string {
 }
 
 /** render subjek, HTML, dan teks polos untuk satu kode OTP */
-export function renderOtpEmail(
-  input: OtpEmailInput,
-): { subject: string; html: string; text: string } {
+export function renderOtpEmail(input: OtpEmailInput): {
+  subject: string;
+  html: string;
+  text: string;
+} {
   const content = CONTENT[input.type];
   const expires = `${input.expiresInMinutes} minute${input.expiresInMinutes === 1 ? "" : "s"}`;
   const appName = escapeHtml(input.appName);

@@ -6,7 +6,14 @@
  * slot `trailing`, lalu tombolnya di-position absolute di kanan.
  */
 type InputType = "text" | "email" | "password";
-type InputMode = "text" | "numeric" | "decimal" | "search" | "email" | "tel" | "url";
+type InputMode =
+  | "text"
+  | "numeric"
+  | "decimal"
+  | "search"
+  | "email"
+  | "tel"
+  | "url";
 
 interface Props {
   id: string;
@@ -74,17 +81,11 @@ const model = defineModel<string>({ default: "" });
       <slot name="trailing" />
     </div>
 
-    <p
-      v-if="error"
-      class="mt-2 text-xs font-medium text-red-600"
-    >
+    <p v-if="error" class="mt-2 text-xs font-medium text-red-600">
       {{ error }}
     </p>
 
-    <p
-      v-else-if="hint"
-      class="mt-2 text-xs text-neutral-400"
-    >
+    <p v-else-if="hint" class="mt-2 text-xs text-neutral-400">
       {{ hint }}
     </p>
   </div>

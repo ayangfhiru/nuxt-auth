@@ -15,13 +15,12 @@ import {
   genericAuthError,
   mapAuthError,
   mapFetchError,
-  retryAfterFromError,
 } from "~/utils/auth-error";
 import {
   isValidEmail,
+  isValidOtpFormat,
   normalizeEmail,
   normalizeOtp,
-  isValidOtpFormat,
   otpSettings,
   passwordConfirmationError,
   passwordError,
@@ -91,7 +90,8 @@ export function useAuth() {
     const email = normalizeEmail(input.email);
 
     if (name.length < 2) return fail("Please enter your full name.");
-    if (!isValidEmail(email)) return fail("Please enter a valid e-mail address.");
+    if (!isValidEmail(email))
+      return fail("Please enter a valid e-mail address.");
 
     const passwordMessage = passwordError(input.password);
     if (passwordMessage) return fail(passwordMessage);
@@ -128,7 +128,8 @@ export function useAuth() {
   }): Promise<AuthActionResult> {
     const email = normalizeEmail(input.email);
 
-    if (!isValidEmail(email)) return fail("Please enter a valid e-mail address.");
+    if (!isValidEmail(email))
+      return fail("Please enter a valid e-mail address.");
     if (!input.password) return fail("Please enter your password.");
 
     return (
@@ -144,7 +145,8 @@ export function useAuth() {
 
           // kebijakan: email belum terverifikasi → arahkan ke halaman OTP
           if (code === "EMAIL_NOT_VERIFIED") {
-            const message = "Please verify your e-mail address before signing in.";
+            const message =
+              "Please verify your e-mail address before signing in.";
             actionError.value = message;
             await navigateTo({ path: "/verify-email", query: { email } });
             return { ok: false, error: message, needsVerification: true };
@@ -207,9 +209,12 @@ export function useAuth() {
     const email = normalizeEmail(input.email);
     const otp = normalizeOtp(input.otp);
 
-    if (!isValidEmail(email)) return fail("Please enter a valid e-mail address.");
+    if (!isValidEmail(email))
+      return fail("Please enter a valid e-mail address.");
     if (!isValidOtpFormat(otp)) {
-      return fail(`Enter the ${otpSettings().length}-digit code from your e-mail.`);
+      return fail(
+        `Enter the ${otpSettings().length}-digit code from your e-mail.`,
+      );
     }
 
     return (
@@ -249,9 +254,12 @@ export function useAuth() {
     const email = normalizeEmail(input.email);
     const otp = normalizeOtp(input.otp);
 
-    if (!isValidEmail(email)) return fail("Please enter a valid e-mail address.");
+    if (!isValidEmail(email))
+      return fail("Please enter a valid e-mail address.");
     if (!isValidOtpFormat(otp)) {
-      return fail(`Enter the ${otpSettings().length}-digit code from your e-mail.`);
+      return fail(
+        `Enter the ${otpSettings().length}-digit code from your e-mail.`,
+      );
     }
 
     const passwordMessage = passwordError(input.password);

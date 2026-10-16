@@ -18,7 +18,10 @@ export function passwordPolicy(): { minLength: number; maxLength: number } {
 }
 
 /** pengaturan OTP dari runtimeConfig.public */
-export function otpSettings(): { length: number; resendCooldownSeconds: number } {
+export function otpSettings(): {
+  length: number;
+  resendCooldownSeconds: number;
+} {
   const settings = useRuntimeConfig().public.otp as
     | { length?: number; resendCooldownSeconds?: number }
     | undefined;

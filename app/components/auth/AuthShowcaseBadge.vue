@@ -6,7 +6,7 @@
 
 <template>
   <span
-    class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.06] px-3.5 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-neutral-300"
+    class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/6 px-3.5 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-neutral-300"
   >
     <svg
       viewBox="0 0 24 24"

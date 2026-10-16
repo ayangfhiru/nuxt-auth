@@ -104,6 +104,11 @@ const email = {
   },
 };
 
+const google = {
+  clientId: str("GOOLE_CLIENT_ID", ""),
+  clientSecret: str("GOOGLE_CLIENT_SECRET", ""),
+};
+
 /* ------------------------------------------------------------------ *
  * Konfigurasi utuh (server) — berisi rahasia, JANGAN pernah diekspor
  * ke runtimeConfig.public.
@@ -119,6 +124,7 @@ export const authConfig = {
   password,
   session,
   email,
+  google,
 } as const;
 
 /**

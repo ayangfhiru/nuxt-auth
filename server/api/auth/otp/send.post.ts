@@ -1,7 +1,7 @@
 import { z } from "zod";
+import { authConfig } from "~~/lib/auth-config";
 import { getEmailProvider } from "~~/lib/email/email-provider";
 import { sendOtpEmail } from "~~/lib/email/send-otp";
-import { authConfig } from "~~/lib/auth-config";
 import { auth } from "~~/server/utils/auth";
 import { prisma } from "~~/server/utils/db";
 import { rateLimitHit } from "~~/server/utils/rate-limit";
@@ -52,8 +52,13 @@ export default defineEventHandler(async (event) => {
   const cooldownMs = authConfig.otp.resendCooldown * 1000;
 
   /* 1. batas per-IP (melindungi dari spam dari satu sumber) */
-  const ip = getHeader(event, "x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
-  const ipLimit = rateLimitHit(`otp-send:ip:${ip}`, IP_LIMIT.max, IP_LIMIT.windowMs);
+  const ip =
+    getHeader(event, "x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  const ipLimit = rateLimitHit(
+    `otp-send:ip:${ip}`,
+    IP_LIMIT.max,
+    IP_LIMIT.windowMs,
+  );
   if (!ipLimit.allowed) {
     throw tooManyRequests(ipLimit.retryAfter);
   }
@@ -78,7 +83,9 @@ export default defineEventHandler(async (event) => {
   if (lastOtp) {
     const ageMs = Date.now() - lastOtp.createdAt.getTime();
     if (ageMs < cooldownMs) {
-      throw tooManyRequests(Math.max(1, Math.ceil((cooldownMs - ageMs) / 1000)));
+      throw tooManyRequests(
+        Math.max(1, Math.ceil((cooldownMs - ageMs) / 1000)),
+      );
     }
   }
 
@@ -100,7 +107,8 @@ export default defineEventHandler(async (event) => {
     throw createError({
       statusCode: 503,
       statusMessage: "Email service unavailable",
-      message: "The e-mail service is temporarily unavailable. Please try again later.",
+      message:
+        "The e-mail service is temporarily unavailable. Please try again later.",
     });
   }
 

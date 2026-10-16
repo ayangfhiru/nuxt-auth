@@ -36,8 +36,8 @@ const model = defineModel<boolean>({ default: false });
           href="/privacy"
           class="font-semibold text-neutral-900 underline underline-offset-2 transition hover:text-primary-600"
         >
-          Privacy Policy
-        </a>.
+          Privacy Policy </a
+        >.
       </span>
     </label>
 

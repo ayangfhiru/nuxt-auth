@@ -20,7 +20,7 @@ defineProps<Props>();
   >
     <!-- Kotak ikon -->
     <span
-      class="grid h-12 w-12 shrink-0 place-items-center rounded-xl border border-white/10 bg-white/[0.06] text-primary-400"
+      class="grid h-12 w-12 shrink-0 place-items-center rounded-xl border border-white/10 bg-white/6 text-primary-400"
     >
       <!-- Email OTP -->
       <svg

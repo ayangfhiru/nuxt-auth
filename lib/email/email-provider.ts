@@ -7,8 +7,8 @@
  *  - Agar provider bisa ditukar (mis. Resend) nanti, semua detail provider
  *    dikurung di belakang interface `EmailProvider`; logika auth tidak berubah.
  */
-import nodemailer from "nodemailer";
 import type { Transporter } from "nodemailer";
+import nodemailer from "nodemailer";
 import { authConfig } from "../auth-config";
 
 /** pesan email yang akan dikirim (provider tidak perlu tahu soal OTP) */

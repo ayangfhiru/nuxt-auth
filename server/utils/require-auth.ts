@@ -28,9 +28,7 @@ export async function requireSession(event: H3Event): Promise<Session> {
  * tolak request tanpa sesi valid ATAU dari email yang belum diverifikasi (403).
  * Dipakai untuk fitur yang menuntut kebijakan "email wajib terverifikasi".
  */
-export async function requireVerifiedSession(
-  event: H3Event,
-): Promise<Session> {
+export async function requireVerifiedSession(event: H3Event): Promise<Session> {
   const session = await requireSession(event);
 
   if (!session.user.emailVerified) {

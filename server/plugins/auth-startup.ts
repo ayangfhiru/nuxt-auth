@@ -4,8 +4,8 @@
  * Tujuannya satu: gagal SEGERA dan JELAS bila konfigurasi auth belum lengkap
  * (lihat lib/env.ts), bukan error aneh di tengah request.
  */
-import { validateAuthEnv } from "~~/lib/env";
 import { authConfig } from "~~/lib/auth-config";
+import { validateAuthEnv } from "~~/lib/env";
 
 export default defineNitroPlugin(() => {
   // melempar error lengkap bila ada variabel esensial yang kosong
